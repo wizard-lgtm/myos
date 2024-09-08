@@ -3,19 +3,22 @@ const builtin = @import("builtin");
 const Target = std.Target;
 
 const os: Target.Os = .{ .tag = Target.Os.Tag.freestanding, .version_range = Target.Os.VersionRange.default(.freestanding, .riscv64) };
-const cpu: Target.Cpu = .{.arch = .riscv64, .features = }
+const features: Target.Cpu.Feature.Set = .{ .ints = .{ 1, 2, 3, 4, 5 } };
+const model = Target.Cpu.Model{ .name = "riscv64", .llvm_name = null, .features = features };
+
+const cpu: Target.Cpu = .{ .arch = .riscv64, .features = features, .model = &model };
 pub fn build(b: *std.Build) void {
     const query = Target.Query{
         .cpu_arch = Target.Cpu.Arch.riscv64,
         .os_tag = Target.Os.Tag.freestanding,
         .abi = Target.Abi.none,
     };
-    const target = std.Target{ .os = os, .abi = .none, .cpu = std.Target.Cpu, .ofmt = .raw };
+    const target = std.Target{ .os = os, .abi = .none, .cpu = cpu, .ofmt = Target.ObjectFormat.default(os.tag, .riscv64) };
     const resolved_target = std.Build.ResolvedTarget{ .query = query, .result = target };
     const optimize = b.standardOptimizeOption(.{});
 
     const exe = b.addExecutable(.{
-        .name = "myos",
+        .name = "myos.bin",
         .root_source_file = b.path("src/main.zig"),
         .target = resolved_target,
         .optimize = optimize,
