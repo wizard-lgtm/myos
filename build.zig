@@ -4,7 +4,11 @@ const Target = std.Target;
 
 const os: Target.Os = .{ .tag = Target.Os.Tag.freestanding, .version_range = Target.Os.VersionRange.default(.freestanding, .riscv64) };
 const features: Target.Cpu.Feature.Set = .{ .ints = .{ 1, 2, 3, 4, 5 } };
-const model = Target.Cpu.Model{ .name = "riscv64", .llvm_name = null, .features = features };
+const model = Target.Cpu.Model{
+    .name = "riscv64", // riscv
+    .llvm_name = null, // null
+    .features = features,
+};
 
 const cpu: Target.Cpu = .{ .arch = .riscv64, .features = features, .model = &model };
 pub fn build(b: *std.Build) void {
@@ -23,6 +27,10 @@ pub fn build(b: *std.Build) void {
         .target = resolved_target,
         .optimize = optimize,
     });
+
+    exe.setLinkerScript(b.path("./linker.ld"));
+    // add linker script,
+    // TODO
 
     b.installArtifact(exe);
     const run_cmd = b.addRunArtifact(exe);
