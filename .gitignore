@@ -1,3 +1,4 @@
 zig-out
 out
 .zig-cache
+build
