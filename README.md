@@ -4,6 +4,10 @@
 
 ## A unix-like os is about to being yours, light and open for _risc-v64_.
 
+## Supported systems 
+- Qemu
+- Vision Five 2 (Future planned) 
+
 ## Contribitions
 
 Fork it, hack it, test it, pull it.
