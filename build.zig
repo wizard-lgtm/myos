@@ -17,15 +17,16 @@ pub fn build(b: *std.Build) void {
         .os_tag = Target.Os.Tag.freestanding,
         .abi = Target.Abi.none,
     };
-    const target = std.Target{ .os = os, .abi = .none, .cpu = cpu, .ofmt = Target.ObjectFormat.default(os.tag, .riscv64) };
+    const target = std.Target{ .os = os, .abi = .none, .cpu = cpu, .ofmt = .elf };
     const resolved_target = std.Build.ResolvedTarget{ .query = query, .result = target };
     const optimize = b.standardOptimizeOption(.{});
 
     const exe = b.addExecutable(.{
-        .name = "myos.bin",
+        .name = "myos.elf",
         .root_source_file = b.path("src/main.zig"),
         .target = resolved_target,
         .optimize = optimize,
+        .code_model = std.builtin.CodeModel.medium,
     });
 
     exe.setLinkerScript(b.path("./linker.ld"));

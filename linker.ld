@@ -1,18 +1,22 @@
 ENTRY(_start)
- 
+
+MEMORY {
+    kernel_space (rwx) : ORIGIN = 0x80200000, LENGTH = 128K
+}
+
 SECTIONS {
-    . = 1M;
- 
+    . = ORIGIN(kernel_space);
+
     .text : ALIGN(4K) {
-        KEEP(*(.multiboot))
+        *(.init)
         *(.text)
-    }
- 
+    } > kernel_space
+
     .rodata : ALIGN(4K) {
         *(.rodata)
-    }
- 
-    .data : ALIGN(4K) {
-        *(.data)
-    }
+    } > kernel_space
+
+    .bss : ALIGN(4K) {
+        *(.bss)
+    } > kernel_space
 }

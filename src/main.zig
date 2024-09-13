@@ -1,15 +1,17 @@
-const Multiboot2Header = @import("./multiboot.zig").Multiboot2Header;
-
-export var multiboot align(4) linksection(".multiboot") = Multiboot2Header{
-    .magic = 0xE85250D6, // magic number
-    .architecture = 0, // riscv
-    .header_length = 24, // length
-    .checksum = @intCast(0xFFFFFFFF - (0xE85250D6 + 0 + 24) + 1), // correct wrapping for u32
-
-};
-
+const uart_ptr: *volatile u8 = @ptrFromInt(0x10000000);
+fn put_chr(chr: u8) void {
+    uart_ptr.* = chr;
+}
+fn print_str(str: []const u8) void {
+    for (str) |chr| {
+        put_chr(chr);
+    }
+}
 // start
 export fn _start() noreturn {
     // loop
-    while (true) {}
+    print_str("Hello worldaaa!\n");
+    while (true) {
+        put_chr(uart_ptr.*);
+    }
 }
