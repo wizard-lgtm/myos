@@ -13,7 +13,13 @@
 Fork it, hack it, test it, pull it.
 
 ## Build Instructions
+### dependencies:
+- Riscv64 qemu
+- Ziglang (0.13.0+)
+- Gcc toolchain
+- U-boot tools
 
-### Dependencies:
-
-## Made with suffer and sweat
+### Run
+`zig build`
+`sh run.sh`
+## Made with suffer, love and cuteness
