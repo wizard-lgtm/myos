@@ -30,6 +30,7 @@ pub fn build(b: *std.Build) void {
     });
 
     exe.setLinkerScript(b.path("./linker.ld"));
+    exe.addAssemblyFile(b.path("./boot.s"));
     // add linker script,
     // TODO
 

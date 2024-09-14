@@ -7,10 +7,10 @@ fn print_str(str: []const u8) void {
         put_chr(chr);
     }
 }
-// start
-export fn _start() noreturn {
+// kmain 
+export fn kmain() void{
     // loop
-    print_str("Hello worldaaa!\n");
+    print_str("merhaba meryem!\n");
     while (true) {
         put_chr(uart_ptr.*);
     }
