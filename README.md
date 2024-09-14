@@ -16,8 +16,8 @@ Fork it, hack it, test it, pull it.
 ### dependencies:
 - Riscv64 qemu
 - Ziglang (0.13.0+)
-- Gcc toolchain
-- U-boot tools
+- Risc-v Gcc cross platform toolchain
+- U-boot
 
 ### Run
 `zig build`
