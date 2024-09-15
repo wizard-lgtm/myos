@@ -15,11 +15,32 @@ Myos is designed for risc-v cardboard and embedded systems. And it's focuces to 
 Fork it, hack it, test it, pull it.
 
 ## Build Instructions
-### dependencies:
+## dependencies:
 - Riscv64 qemu
 - Ziglang (0.13.0+)
 - Risc-v Gcc cross platform toolchain
 - U-boot
+- 
+For ubuntu/debian:
+```
+sudo apt install bison flex build-essentials riscv64-linux-gnu-gcc
+```
+
+## Building U-boot
+```
+git clone https://github.com/u-boot/u-boot
+cd u-boot
+make qemu-riscv64_defconfig
+make
+cp u-boot.bin ../myos/deps/
+```
+## Building OpenSBI
+```
+git clone https://github.com/riscv-software-src/opensbi.git
+cd opensbi
+make ARCH=riscv CROSS_COMPILE=riscv64-linux-gnu- PLATFORM=generic
+cp build/platform/generic/firmware/fw_dynamic.elf ../myos/deps
+```
 
 ### Run
 `zig build`
