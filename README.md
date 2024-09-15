@@ -23,7 +23,7 @@ Fork it, hack it, test it, pull it.
 - 
 For ubuntu/debian:
 ```
-sudo apt install bison flex build-essentials riscv64-linux-gnu-gcc
+sudo apt install bison flex build-essential gcc-riscv64-linux-gnu
 ```
 
 ## Building U-boot
