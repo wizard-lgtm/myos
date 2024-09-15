@@ -3,6 +3,8 @@
 (note: i didn't decide to project name, if you have any suggestions, open a pull request)
 
 ## A unix-like os is about to being yours, light and open for _risc-v64_.
+## Motivation
+Myos is designed for risc-v cardboard and embedded systems. And it's focuces to simplicity, and running on low-spec hardware. Linux is too heavy and unneceserry for riscv embedded systems,such as car, elevator, or even a strech machine gui control panel.
 
 ## Supported systems 
 - Qemu
