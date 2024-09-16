@@ -23,7 +23,7 @@ pub fn build(b: *std.Build) void {
 
     const exe = b.addExecutable(.{
         .name = "myos.elf",
-        .root_source_file = b.path("src/main.zig"),
+        .root_source_file = b.path("src/kernel.zig"),
         .target = resolved_target,
         .optimize = optimize,
         .code_model = std.builtin.CodeModel.medium,

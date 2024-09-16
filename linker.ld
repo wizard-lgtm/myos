@@ -1,38 +1,30 @@
-OUTPUT_FORMAT("elf64-littleriscv")
+
+
 ENTRY(_start)
 
 SECTIONS
 {
-    /* Set the base address for where your bootloader code will be loaded.
-       This address depends on your platform and OpenSBI configuration. */
-    . = 0x80400000;
+    /* Define the memory region for kernel */
+    . = 0x80200000;
 
-    /* Text section where your boot.s and kmain will be placed */
     .text : {
-        *(.text.boot)    /* Place all the code marked .text.boot here */
-        *(.text)         /* Place other text sections here */
+        *(.text*)     /* All the .text sections */
     }
 
-    /* Data section */
+    .rodata : {
+        *(.rodata*)   /* All the .rodata sections */
+    }
+
     .data : {
-        *(.data)
+        *(.data*)     /* All the .data sections */
     }
 
-    /* BSS section (uninitialized data) */
     .bss : {
-        *(.bss)
-        *(COMMON)
+        _bss_start = .;
+        *(.bss*)
+        _bss_end = .;
     }
 
-    /* Stack region */
-    . = ALIGN(16);
-    .stack : {
-        stack_top = .;     /* Mark the top of the stack */
-        . += 0x1000;       /* Allocate 4KB for the stack */
-        stack_bottom = .;  /* Mark the bottom of the stack */
-    }
-
-    /* End of memory layout */
-    _end = .;
+    /* Define the top of the stack */
+    _stack_top = 0x80300000;
 }
-
