@@ -1,5 +1,9 @@
-pub fn mstatus_read() u64 {
-    return asm volatile ("csrr t0, mstatus"
-        : [ret] "={t0}" (-> usize),
+pub fn mstatus_read() usize {
+    var result: usize = 0;
+    asm volatile ("csrr %[result], mstatus"
+        : [result] "=r" (result),
     );
+    return result;
 }
+pub fn mcause_read() void {}
+pub fn mtvec_read() void {}
