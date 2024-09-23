@@ -29,6 +29,14 @@ pub fn build(b: *std.Build) void {
         .code_model = std.builtin.CodeModel.medium,
     });
 
+    const buildarg = b.option(bool, "debug", "Set Debug mode") orelse false;
+
+    const options = b.addOptions();
+
+    options.addOption(bool, "debug", buildarg);
+
+    exe.root_module.addOptions("build_options", options);
+
     exe.setLinkerScript(b.path("./linker.ld"));
     exe.addAssemblyFile(b.path("./boot.s"));
     // add linker script,
