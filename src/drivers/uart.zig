@@ -1,4 +1,5 @@
 const std = @import("std");
+const config = @import("../config.zig");
 pub const Uart = struct {
     pub const BASE_ADDR: usize = 0x10000000; // UART base address
     pub const UART_THR: *volatile u8 = @ptrFromInt(BASE_ADDR + 0x0); // Transmit Holding Register, For sending datas
@@ -50,10 +51,15 @@ pub const Uart = struct {
     /// Prints debug message if the KernelOptions.debug = true
     ///
     pub fn debug(self: *Self, comptime format: []const u8, args: anytype) void {
-        const _writer = self.*.writer();
-        _writer.print(format, args) catch {
-            print("a formatting error happened!");
-        };
+        const is_debug: bool = config.get_debug();
+
+        if (is_debug) {
+            const _writer = self.*.writer();
+            print("[DEBUG]: ");
+            _writer.print(format, args) catch {
+                print("a formatting error happened!");
+            };
+        }
     }
 };
 
