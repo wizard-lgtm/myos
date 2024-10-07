@@ -55,17 +55,37 @@ pub fn set_trap_handler(trap_handler_ptr: *const fn () void) void {
     return;
 }
 
+// Supervisor interrupts
 pub fn enable_supervisor_interrupts() void {
     var sstatus = Asm.csr_read(SCsr.sstatus);
     const SIE_BIT: u64 = 1 << 1;
     sstatus |= SIE_BIT;
     Asm.csr_write(sstatus, SCsr.sstatus);
 }
+pub fn check_supervisor_interrupts_enabled() bool {
+    const sstatus: usize = Asm.csr_read(Asm.SCsr.sstatus); // Read sstatus register
+    const mask = 1 << 1; // 1st bit of sstatus equals SIE
+    return (sstatus & mask) != 0; // Perform AND operation for checking
+}
 
+// Timer interrupts
+pub fn check_supervisor_timer_interrupts_enabled() bool {
+    const sie: usize = Asm.csr_read(Asm.SCsr.sie); // Read sstatus register
+    const mask = 1 << 5; // 5th bit of sie equals STIE
+    return (sie & mask) != 0; // Perform AND operation for checking
+}
+pub fn enable_supervisor_timer_interrupts() void {
+    var sie = Asm.csr_read(SCsr.sie);
+    const mask = 1 << 5; // 5th bit of sie equals STIE
+    sie = sie | mask; // Perform OR operation for setting 5th bit to 1
+    Asm.csr_write(sie, SCsr.sie);
+}
+
+// Trap handler
 pub fn trap_handler() align(4) void {
     const scause = Asm.csr_read(SCsr.scause);
-    const is_interrupt_mask = 1 << 63;
-    const is_interrupt: bool = scause & is_interrupt_mask == 1;
+    const is_interrupt_mask = 1 << 63; // 63th last bit is for is interrupt?
+    const is_interrupt: bool = scause & is_interrupt_mask == 1; // perform AND operation to scause
 
     uart.debug("Trap Occured\n", .{});
 
