@@ -3,6 +3,7 @@ const Uart = @import("./drivers/uart.zig").Uart;
 const _asm = @import("./asm.zig");
 const interrupts = @import("./interrupts.zig");
 const config = @import("./config.zig");
+const timer = @import("./timer.zig");
 
 // kernel.zig
 export fn kmain() void {
@@ -21,8 +22,22 @@ export fn kmain() void {
     interrupts.enable_external_interrupts();
 
     // test trap
-    const invalid_memory: *u8 = @ptrFromInt(0xFFFFFFFF);
-    invalid_memory.* = 42;
+    // const invalid_memory: *u8 = @ptrFromInt(0xFFFFFFFF);
+    // invalid_memory.* = 42;
+
+    // get time
+    timer.timer_init();
+    const time = timer.rdtime_get();
+    uart.printf("timer occured!, rdtime: {d}\n", .{time});
+    timer.create_timer();
+    uart.printf("timer occured!, rdtime: {d}\n", .{time});
+    timer.create_timer();
+    timer.create_timer();
+    timer.create_timer();
+    timer.create_timer();
+    timer.create_timer();
+    uart.printf("timer occured!, rdtime: {d}\n", .{time});
+    uart.printf("timer occured!, rdtime: {d}\n", .{time});
 
     while (true) {}
 }
