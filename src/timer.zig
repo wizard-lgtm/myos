@@ -36,7 +36,7 @@ pub fn rdtime_get() usize {
 }
 pub fn create_timer() void {
     const time: usize = rdtime_get();
-    const cmp: usize = time + 100000000; // add 10000 ticks to current time and set timer into it
+    const cmp: usize = time + 1000000; // add 10000 ticks to current time and set timer into it
     // When timer ticks into our cmp tick, it's gonna send an interrupt to cpu
     asm volatile ("csrw stimecmp, %[cmp]"
         :

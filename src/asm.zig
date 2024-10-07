@@ -30,4 +30,8 @@ pub const Asm = struct {
         );
         return value;
     }
+
+    pub fn wfi() void {
+        asm volatile ("wfi");
+    }
 };

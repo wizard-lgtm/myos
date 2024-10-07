@@ -28,15 +28,10 @@ export fn kmain() void {
     // get time
     timer.timer_init();
     const time = timer.rdtime_get();
+
     uart.printf("timer occured!, rdtime: {d}\n", .{time});
     timer.create_timer();
-    uart.printf("timer occured!, rdtime: {d}\n", .{time});
-    timer.create_timer();
-    timer.create_timer();
-    timer.create_timer();
-    timer.create_timer();
-    timer.create_timer();
-    uart.printf("timer occured!, rdtime: {d}\n", .{time});
+    asm volatile ("wfi");
     uart.printf("timer occured!, rdtime: {d}\n", .{time});
 
     while (true) {}
