@@ -4,5 +4,4 @@ qemu-system-riscv64 \
 -kernel zig-out/bin/myos.elf \
 -serial mon:stdio \
 -nographic \
--d int \
 -device virtio-keyboard-pci
