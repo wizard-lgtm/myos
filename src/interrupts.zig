@@ -101,8 +101,7 @@ pub fn trap_handler() align(4) void {
         uart.debug("An exception happened\n", .{});
         uart.printf("cause: {any}\n", .{cause});
     }
-
-    while (true) {}
+    asm volatile ("sret");
 }
 ///
 ///
